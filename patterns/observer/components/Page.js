@@ -1,14 +1,10 @@
-const ObservablePage = require('./ObservablePage');
-
-class Page extends ObservablePage {
+class Page {
   constructor({ title = '' }) {
-    super();
-
     this.title = title;
   }
 
   update() {
-    super.update();
+
     console.log('Page is updated!', this.title);
   }
 }

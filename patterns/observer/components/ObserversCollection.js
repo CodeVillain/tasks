@@ -13,10 +13,6 @@ class ObserversCollection {
     }
   }
 
-  getAll() {
-    return this.observers;
-  }
-
   count() {
     return this.observers.length;
   }

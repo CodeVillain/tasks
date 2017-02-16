@@ -9,8 +9,4 @@ const footer = new Footer();
 
 const page = new Page({title: 'Say my name'});
 
-page.addObserver(header.render);
-page.addObserver(layout.render);
-page.addObserver(footer.render);
-
 page.update();
