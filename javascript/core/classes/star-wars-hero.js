@@ -5,6 +5,14 @@ class Hero {
     //...
   }
 
+  // get age() {
+  //   return this._age;
+  // }
+  //
+  // set age(newAge) {
+  //   return this._age = newAge;
+  // }
+
   render() {
     const element = document.createElement('div');
     element.classList.add('hero');
@@ -16,3 +24,8 @@ class Hero {
     return element;
   }
 }
+
+const luke = new Hero('Luke', 22);
+
+// luke.age = 23;
+// console.log(luke.age);
