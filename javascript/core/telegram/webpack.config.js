@@ -47,20 +47,26 @@ config.merge({
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
-          loader: [
-            {
-              loader: 'css-loader',
-              options: {
-                modules: true,
-                sourceMap: true,
-                importLoaders: 1,
-                localIdentName: '[local]__[hash:base64:5]'
-              }
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: true,
+              importLoaders: 1,
+              localIdentName: '[local]__[hash:base64:5]'
             }
-          ]
-        })
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [require('precss'), require('autoprefixer')]
+            }
+          }
+        ]
       },
     ]
   },
@@ -72,7 +78,8 @@ config.merge({
     new webpack.EnvironmentPlugin({
       NODE_ENV: process.env.NODE_ENV
     }),
-    new ExtractTextPlugin('styles.css')
+    new ExtractTextPlugin({ filename: 'bundle.css', disable: false, allChunks: true }),
+    new webpack.NamedModulesPlugin()
   ]
 });
 
@@ -86,12 +93,15 @@ if (isDev) {
       pathinfo: true
     },
     devServer: {
+      stats: 'errors-only',
       contentBase: './public',
       hot: true,
       inline: true,
       historyApiFallback: true,
-      noInfo: true,
-      quiet: true
+      watchOptions: {
+        aggregateTimeout: 300,
+        poll: true
+      }
     },
     plugins: [
       new webpack.LoaderOptionsPlugin({
