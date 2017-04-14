@@ -28,17 +28,7 @@ config.merge({
         exclude: /node_modules/,
         use: [
           {
-            loader: 'babel-loader',
-            options: {
-              plugins: [
-                'transform-runtime',
-                'transform-class-properties'
-              ],
-              presets: [
-                ['es2015', { modules: false }],
-                'stage-2'
-              ]
-            }
+            loader: 'babel-loader'
           },
           {
             loader: 'eslint-loader'
