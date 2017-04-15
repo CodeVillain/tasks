@@ -1,7 +1,7 @@
 import Express from 'express';
 import http from 'http';
 import socketio from 'socket.io';
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 import cors from 'cors';
 import Chat from './models/chat';
 import User from './models/user';
@@ -48,7 +48,14 @@ app.post('/chats/:id', (req, res) => {
 });
 
 app.put('/chats/:id', (req, res) => {
-  console.log(req.body);
+  Chat
+    .findByIdAndUpdate(
+      req.params.id,
+      { $push: { messages: { message: req.body.message, user: Types.ObjectId(req.body.user) } } },
+      { new: true }
+    )
+    .then(chat => res.send(chat))
+    .catch(err => res.send(500, err));
 });
 
 httpServer.listen(3000, () => console.log('Server listening on port 3000'));
